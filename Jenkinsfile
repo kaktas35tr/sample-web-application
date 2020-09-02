@@ -2,7 +2,6 @@ pipeline {
   environment {
     registry = "kaktas35/sample-web-application"
     registryCredential = '2c76a6d9-b084-4e17-aa26-38e223083859' //dockerhub credentials ID, defined on Jenkins
-    imagename = "web-app"
     dockerImage = ''
   }
   agent any
@@ -15,7 +14,7 @@ pipeline {
     stage('Build Docker Image') {
       steps{
         script {
-          dockerImage = docker.build imagename + ":v.$BUILD_NUMBER"
+          dockerImage = docker.build registry + ":v.$BUILD_NUMBER"
         }
       }
     }
