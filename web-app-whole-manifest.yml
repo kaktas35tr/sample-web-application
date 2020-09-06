@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web-app
+  template:
+    metadata:
+      labels:
+        app: web-app   
+    spec:
+      containers:
+      - name: web-app
+        image: kaktas35/sample-web-application:v.12
+        ports:
+        - containerPort: 11130
+        resources:
+          requests:
+            cpu: "150m"
+          limits:
+            cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app
+  labels:
+    app: web-app
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 11130
+    protocol: TCP
+    targetPort: 11130
+  selector:
+    app: web-app
